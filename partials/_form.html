@@ -1,16 +1,16 @@
-<form ng-controller="FormController as form">
+<form ng-controller="FormController as form" method="post" action="processcontact.php">
   <div class="form-group">
     <label for="nombre">Nombre</label>
-    <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
   </div>
   <div class="form-group">
      <label for="email">Email</label>
-     <input type="email" class="form-control" id="email" placeholder="Email" required>
+     <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
   </div>
 
   <div class="form-group">
     <label for="email">Situación laboral actual</label>
-    <select ng-model="situacionlaboral" class="form-control" required>
+    <select ng-model="situacionlaboral" name="situacionlaboral" class="form-control" required>
       <option value="" selected>Elegir una opción</option>
       <option value="trabajo" name="trabajo">Trabajo</option>
       <option value="estudio" name="estudio">Estudio</option>
@@ -22,7 +22,7 @@
   <div class="trabajo" id="trabajo" ng-show="situacionlaboral=='trabajo'">
     <div class="form-group">
       <label for="email">Indique su sector laboral</label>
-      <input type="text" class="form-control" id="sector" placeholder="Sector Laboral" required>
+      <input type="text" class="form-control" name="sectorlaboral" id="sector" placeholder="Sector Laboral" required>
     </div>
 
     <div ng-include="'partials/_seocampos.html'"></div>
@@ -33,7 +33,7 @@
   <div class="estudio" id="estudio" ng-show="situacionlaboral=='estudio'">
     <div class="form-group">
       <label for="email">¿Qué esta estudiando?</label>
-      <input type="text" class="form-control" id="queestudia" placeholder="Sector Laboral" required>
+      <input type="text" class="form-control" name="queestudia" id="queestudia" placeholder="Sector Laboral">
     </div>
 
     <div ng-include="'partials/_seocampos.html'"></div>
@@ -44,7 +44,7 @@
   <div class="estudio" id="estudio" ng-show="situacionlaboral=='desempleo'">
     <div class="form-group">
       <label for="email">¿Qué nivel de estudios tiene?</label>
-      <select class="form-control" required>
+      <select class="form-control" name="nivelestudios">
         <option value="sinestudios" name="sinestudios"> Sin estudios </option>
         <option value="Graduadoescolar" name="Graduadoescolar">Graduado escolar</option>
         <option value="Bachiller" name="Bachiller">Bachiller</option>
@@ -59,7 +59,7 @@
 
   <div class="form-group">
     <label for="paises">Elige tu país</label>
-    <select class="form-control" required>
+    <select class="form-control" name="pais">
       <option value="" selected>Elegir una opción</option>
       <option value="australia" name="autralia">Ausrtalia</option>
       <option value="autria" name="autraia">Austria</option>
@@ -67,7 +67,7 @@
       <option value="belgium" name="belgium">Belgica</option>
       <option value="bulgaria" name="nulgaria">Bulgaria</option>
       <option value="croatia" name="croatia">Croacia</option>
-      <option value="czech republic" name="">Republica Checa</option>
+      <option value="czech republic">Republica Checa</option>
       <option value="denmark" name="denmark">Dinamarca</option>
       <option value="estonia" name="estonia">Estonia</option>
       <option value="finland" name="finland">Finlandia</option>
@@ -95,7 +95,7 @@
       <option value="sweden" name="sweden">Suecia</option>
       <option value="switzerland" name="switzerland">Suiza</option>
       <option value="turkey" name="turkey">Turkia</option>
-      <option value="unitedkingdom" name="">Reino Unido</option>
+      <option value="unitedkingdom" >Reino Unido</option>
       <option value="ukraine" name="ukraine">Ukrania</option>
       <option value="canada" name="canada">Canada</option>
       <option value="unitedstates" name="unitedstates">Estados Unidos de América</option>
@@ -104,16 +104,27 @@
   </div>
 
   <div class="form-group">
-    <label for="email">¿Cómo nos conoció?</label>
-    <select class="form-control">
+    <label for="comoconocio">¿Cómo nos conoció?</label>
+    <select ng-model="comoconocio" name="comoconocio" class="form-control">
       <option value="" selected>Elegir una opción</option>
       <option value="amigo" name="amigo">Un amigo</option>
-      <option value="Social media">Redes sociales</option>
+      <option value="socialmedia">Redes sociales</option>
       <option value="web" name="web">Nuestra pagina web</option>
       <option value="Anunciosweb"name="anunciosweb">Anuncios en la  web</option>
       <option value="Correo" name="Correo">Un correo</option>
       <option value="publiciadad">Anuncio publicitario</option>
     </select>
+  </div>
+
+  <div class="form-group" ng-show="comoconocio=='socialmedia'">
+    <label for="tiporedsocial">Especifique la red social</label>
+    <select name="tiporedsocial" class="form-control" >
+      <option value="google+" name="google+">Google +</option>
+      <option value="Facebook" name="Facebook"> Facebook</option>
+      <option value="Twitter">Twitter</option>
+      <option value="LinkedIn">LinkedIn</option>
+    </select>
+
   </div>
 
   <button type="submit" class="btn btn-default">Submit</button>
