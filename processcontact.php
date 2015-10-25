@@ -1,6 +1,5 @@
 <?php
 
-
 @$name          = addslashes($_POST['nombre']);
 @$email         = addslashes($_POST['email']);
 
@@ -44,7 +43,6 @@ $cabeceras = "From: $email\n" //El remitente
 
  . "Reply-To: $email\n"; //Dirección de respuesta
 
-$asunto = "Formulario SEOschool - Curso Seo gratis"; //El asunto
 
 $email_to = "ar.ibarrasalas@gmail.com"; //El email
 // $email_to = "tucomalex@gmail.com"; //El email
@@ -52,9 +50,50 @@ $email_to = "ar.ibarrasalas@gmail.com"; //El email
 
 
 
+// ENVIANDO CON SWIFTMAILER
+
+require_once 'lib/swift_required.php';
+
+$senderEmail = 'example@gmail.com';
+$senderPassword = 'password';
+$senderName = 'John Doe';
+
+$receiverEmail = 'example@gmail';
+$receiverName = 'John Dow';
+
+$asunto = "Formulario SEOschool - Curso Seo gratis"; //El asunto
+
+// Create the Transport
+// $transporter = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
+$transporter = Swift_SmtpTransport::newInstance('ssl://smtp.gmail.com', 465)
+  ->setUsername($senderEmail)
+  ->setPassword($senderPassword);
+
+/*
+You could alternatively use a different transport such as Sendmail or Mail:
+
+// Sendmail
+$transport = Swift_SendmailTransport::newInstance('/usr/sbin/sendmail -bs');
+
+// Mail
+$transport = Swift_MailTransport::newInstance();
+*/
+
+// Create the Mailer using your created Transport
+$mailer = Swift_Mailer::newInstance($transporter);
+
+// Create a message
+$message = Swift_Message::newInstance($asunto)
+  ->setFrom(array($senderEmail => $senderName))
+  ->setTo(array($receiverEmail => $receiverName))
+  ->setBody($contenido)
+  ;
+
+// ENVIANDO CON SWIFTMAILER
+
 //Envia el mensaje
 
-if (@mail($email_to, $asunto ,$contenido ,$cabeceras )) {
+if ($mailer->send($message)) {
 
 //Si el mensaje se envía muestra una confirmación
 
